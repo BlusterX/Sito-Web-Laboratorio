@@ -12,7 +12,7 @@ class DatabaseHelper{
 
     public function getRandomPosts($n=2){
         //statement
-        $stmt = $this->db->prepare("SELECT idarticolo, imgarticolo FROM articolo ORDER BY RAND() LIMIT ?");
+        $stmt = $this->db->prepare("SELECT titoloarticolo, imgarticolo FROM articolo ORDER BY RAND() LIMIT ?");
         //binding dei parametri, tipo e valore del parametro da aassociare
         $stmt->bind_param("i", $n);
         //esegui l'interrogazione
@@ -46,6 +46,18 @@ class DatabaseHelper{
 
         return $result->fetch_all(MYSQLI_ASSOC);
 
+    }
+
+    public function getAuthors(){
+        $query = "SELECT username, nome, GROUP_CONCAT(DISTINCT nomecategoria) as argomenti FROM categoria, articolo, autore, articolo_ha_categoria WHERE idarticolo=articolo AND categoria=idcategoria AND autore=idautore AND attivo=1 GROUP BY username, nome"
+        ;$stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getIdFromName($name){
+        return preg_replace("/[^a-z]/", '', strtolower($name));
     }
 }
 
