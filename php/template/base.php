@@ -11,12 +11,14 @@
     </header>
     <nav>
         <ul>
-            <li><a <?php isActive("index.php"); ?> href="index.php">Home</a></li><li><a <?php isActive("archivio.php"); ?> href="archivio.html">Archivio</a></li><li><a <?php isActive("contatti.php"); ?> href="contatti.php">Contatti</a></li><li><a <?php isActive("login.php"); ?> href="login.php">Login</a></li>
+            <li><a <?php isActive("index.php"); ?> href="index.php">Home</a></li><li><a <?php isActive("archivio.php"); ?> href="archivio.php">Archivio</a></li><li><a <?php isActive("contatti.php"); ?> href="contatti.php">Contatti</a></li><li><a <?php isActive("login.php"); ?> href="login.php">Login</a></li>
         </ul>
     </nav>
     <main>
     <?php
-        require($templateParams["nome"]);
+        if(isset($templateParams["nome"])){
+            require($templateParams["nome"]);
+        }
     ?>
     </main><aside>
         <section>
